@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// Получаем токен доступа
 async function getAccessToken() {
   const response = await axios.post(
     'https://test.api.amadeus.com/v1/security/oauth2/token',
@@ -14,9 +13,9 @@ async function getAccessToken() {
   return response.data.access_token;
 }
 
+const token = await getAccessToken();
+
 export default async function getHotels(cityCode) {
-    const token = await getAccessToken();
-  
     try {
       const response = await axios.get(
         `https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=${cityCode}`,

@@ -1,0 +1,263 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+body {
+  background-color: #050505;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+}
+
+.user-location {
+  display: flex;
+  justify-content: center;
+  color: #fff;
+  font-size: 6px;
+}
+
+.user-location .spinner {
+    width: 6px;
+    height: 6px;
+    border: 4px solid rgba(255, 255, 255, 0.2); 
+    border-top: 4px solid white; 
+    border-radius: 50%;
+    animation: spin 0.5s linear infinite;
+    margin: 8.5px;
+  }
+  
+.user-location .spinner-icon {
+    display: none;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background-color: #0E1218;
+}
+
+.title {
+  color: white;
+}
+
+.site-config {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  gap: 10px;
+  align-self: center;
+}
+  
+
+.currency, .theme-switcher {
+  font-size: 16px;
+  background-color: transparent;
+  color: white;
+  width: 50px;
+  padding: 15px 5px;
+  border: none;
+  border-radius: 5px;
+}
+
+.currency:hover, .theme-switcher:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.currency-menu {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  width: 60%;
+  max-width: 500px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 10px;
+}
+
+.currency-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  font-size: 20px;
+  cursor: pointer;
+  color: black;
+}
+
+.currency-menu-disc {
+  margin: 0;
+  font-weight: bold;
+  color: black;
+}
+
+.currency-menu-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px 20px;
+}
+
+.modal-overlay.show .currency-menu {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.currency-menu-item {
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #333;
+  font-size: 14px;
+  text-align: left;
+  transition: 0.2s ease;
+  border: 1px solid #ddd;
+}
+
+.currency-disc {
+  color: #888;
+  font-size: 10px;
+  margin-left: 5px;
+}
+
+.currency-menu-item:hover {
+  background-color: #e7f3ff;
+  color: #007bff;
+  transform: scale(1.05);
+}
+
+.currency-menu-item.active {
+  border-color: #007bff;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.hotel-search {
+  display: flex;
+  position: relative;
+  align-self: center;
+  gap: 5px;
+}
+
+.hotel-search #input-icon {
+  position: absolute;
+  left: 10px;
+  top: 48%;
+  transform: translateY(-50%);
+  color: black;
+  font-size: 18px;
+}
+
+.search-input,
+.checkin-checkout,
+.people-count,
+.search {
+  background-color: #fff;
+  padding: 15px 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  font-size: 16px;
+  color: #333;
+  outline: none;
+}
+
+.search-input:hover,
+.checkin-checkout:hover,
+.people-count:hover,
+.search:hover {
+  border-color: #007bff;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.search-input:focus,
+.checkin-checkout:focus,
+.people-count:focus {
+  border-color: #0056b3;
+  box-shadow: 0 4px 15px rgba(0, 86, 179, 0.4);
+}
+
+.search-input {
+  padding-left: 30px;
+}
+
+.search-suggestions-header {
+  padding: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.search-suggestions {
+  position: absolute;
+  top: 100%; 
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 300px; 
+  overflow-y: auto;
+  display: none; 
+  z-index: 10;
+}
+  
+.search-suggestions.show {
+  display: block;  
+}
+  
+.suggestions-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+  
+.suggestions-item i {
+  margin-right: 8px;
+  color: #007BFF; 
+}
+  
+.suggestions-item:hover {
+  background-color: #f0f0f0;
+  color: #007BFF; 
+}
+  
+  
+  
+  
