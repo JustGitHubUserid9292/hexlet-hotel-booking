@@ -62,4 +62,14 @@ export const popularCities = {
     "Portugal": ["Lisbon", "Porto", "Funchal", "Albufeira", "Sintra"],
     "Netherlands": ["Amsterdam", "Rotterdam", "The Hague", "Utrecht", "Groningen"]
 }
+
+
+export const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const weekday = date.toLocaleString("en", { weekday: "short" }); 
+    const month = date.toLocaleString("en", { month: "short" });
+  
+    return `${weekday}, ${day} ${month}`;
+};
   
