@@ -179,7 +179,7 @@ body {
 
 .search-input,
 .checkin-checkout,
-.people-count,
+.booking-details-btn,
 .search {
   background-color: #fff;
   padding: 15px 10px;
@@ -194,7 +194,7 @@ body {
 
 .search-input:hover,
 .checkin-checkout:hover,
-.people-count:hover,
+.booking-details-btn:hover,
 .search:hover {
   border-color: #007bff;
   box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
@@ -202,7 +202,7 @@ body {
 
 .search-input:focus,
 .checkin-checkout.focus,
-.people-count:focus {
+.booking-details-btn:focus {
   border-color: #0056b3;
   box-shadow: 0 4px 15px rgba(0, 86, 179, 0.4);
 }
@@ -275,7 +275,6 @@ body {
 
 .calendar-popup.show {
     display: block;
-    opacity: 1;
 }
 
 .two-months-container {
@@ -375,6 +374,29 @@ body {
 
 .calendar-popup.show {
     animation: fadeIn 0.3s ease forwards;
+}
+
+.booking-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    width: 280px;
+    position: absolute;
+    top: 100%;
+    right: -20px;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.booking-details.show {
+    opacity: 1;
+    visibility: visible;
 }
 
   

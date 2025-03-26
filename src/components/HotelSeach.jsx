@@ -3,12 +3,11 @@ import Calendar from "./Calendar";
 import { formatDate } from "../assets/constants";
 import { popularCities } from "../assets/constants";
 
-const HotelSearch = ({ handleChange, location, place, setPlace }) => {
+const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setCheckIn, checkOut, setCheckOut, adults, setAdults, childrens, setChilderns, rooms, setRooms }) => {
     const currentCountry = location.country
     const [showSuggestions, setShowSuggestions] = useState(false)
     const [showCalendar, setShowCalendar] = useState(false)
-    const [checkIn, setCheckIn] = useState(null)
-    const [checkOut, setCheckOut] = useState(null)
+    const [showBookingDetails, setShowBookingDetails] = useState(false)
 
     const handleClickOutside = (e) => {
         if (showSuggestions && e.target.closest(".search-suggestions") === null) setShowSuggestions(false)
@@ -40,6 +39,10 @@ const HotelSearch = ({ handleChange, location, place, setPlace }) => {
         setShowCalendar((prev) => !prev)
     }
 
+    const toggleBookingDetails = () => {
+        setShowBookingDetails((prev) => !prev)
+    }
+
     const selectDates = (date) => {
         if (!checkIn || (checkIn && checkOut)) {
           setCheckIn(date);
@@ -59,6 +62,30 @@ const HotelSearch = ({ handleChange, location, place, setPlace }) => {
         }
     };
 
+    const handlePlusAdults = () => {
+        return adults < 9 && setAdults((prev) => prev + 1)
+    }
+
+    const handleMinusAdults = () => {
+        return adults > 1 && setAdults((prev) => prev - 1)
+    }
+
+    const handlePlusChildrens = () => {
+        return childrens < 9 && setChilderns((prev) => prev + 1)
+    }
+
+    const handleMinusChildrens = () => {
+        return childrens > 0 && setChilderns((prev) => prev - 1)
+    }
+
+    const handlePlusRooms = () => {
+        return rooms < 9 && setRooms((prev) => prev + 1)
+    }
+
+    const handleMinusRooms = () => {
+        return rooms > 1 && setRooms((prev) => prev - 1)
+    }
+
     return (<>
         <div className="hotel-search">
             <i id="input-icon" className="ri-home-4-line"></i><input type="text" value={place} onClick={toggleSearchSuggestions} className="search-input" placeholder="Where you want to go?" onChange={handleChange} />
@@ -74,7 +101,13 @@ const HotelSearch = ({ handleChange, location, place, setPlace }) => {
             <div className={showCalendar ? "calendar-popup show" : "calendar-popup"}>
                 <Calendar checkIn={checkIn} checkOut={checkOut} selectDates={selectDates}/>
             </div>
-            <button className="people-count"><i className="ri-group-fill"></i> 1 adult · 0 child · 1 room</button>
+            <button className="booking-details-btn" onClick={toggleBookingDetails}><i className="ri-group-fill"></i> {adults} adult · {childrens} child · {rooms} room</button>
+            <div className={showBookingDetails ? "booking-details show" : "booking-details"}>
+                Adults: <div className="booking-details-item"><button className="plus" onClick={handlePlusAdults}><i className="ri-add-line"></i></button><input type="number" className="adults" value={adults} readOnly></input><button className="minus" onClick={handleMinusAdults}><i className="ri-subtract-line"></i></button></div>
+                Childrens: <div className="booking-details-item"><button className="plus" onClick={handlePlusChildrens}><i className="ri-add-line"></i></button><input type="number" className="childrens" value={childrens} readOnly></input><button className="minus" onClick={handleMinusChildrens}><i className="ri-subtract-line"></i></button></div>
+                Rooms: <div className="booking-details-item"><button className="plus" onClick={handlePlusRooms}><i className="ri-add-line"></i></button><input type="number" className="rooms" value={rooms} readOnly></input><button className="minus" onClick={handleMinusRooms}><i className="ri-subtract-line"></i></button></div>
+                <button className="ready" onClick={toggleBookingDetails}>Ready</button>
+            </div>
             <button className="search">Search</button>
         </div>
     </>)

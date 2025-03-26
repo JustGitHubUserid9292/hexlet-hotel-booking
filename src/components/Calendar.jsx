@@ -35,50 +35,26 @@ const Calendar = ({ checkIn, checkOut, selectDates }) => {
       const currentDay = new Date();
       const targetDay = new Date(date);
       const isPastDay = targetDay < currentDay && targetDay.getDate() !== currentDay.getDate();
-      const isSelected =
-        date === checkIn || date === checkOut
-          ? "selected"
-          : checkIn &&
-            checkOut &&
-            new Date(date) > new Date(checkIn) &&
-            new Date(date) < new Date(checkOut)
-        ? "in-range"
-        : "";
+      const isSelected = date === checkIn || date === checkOut ? "selected" : checkIn && checkOut && new Date(date) > new Date(checkIn) && new Date(date) < new Date(checkOut) ? "in-range" : "";
 
       return (
-        <div
-          key={date}
-          className={`day ${isSelected} ${isPastDay ? "inactive" : ""}`}
-          onClick={() => !isPastDay && selectDates(date)}
-        >
-          {day}
-        </div>
+        <div key={date} className={`day ${isSelected}${isPastDay ? "inactive" : ""}`} onClick={() => !isPastDay && selectDates(date)}>{day}</div>
       );
     });
 
     return (
       <div key={i} className="month">
         <div className="month-header">
-          {i === monthOffset && (
-            <button className="prevMonth" onClick={handlePrevMonth} disabled={monthOffset === 0}>
-              <i className="ri-arrow-drop-left-line"></i>
-            </button>
-          )}
+          {i === monthOffset && (<button className="prevMonth" onClick={handlePrevMonth} disabled={monthOffset === 0}><i className="ri-arrow-drop-left-line"></i></button>)}
           <h3>{month.toLocaleString("en-US", { month: "long" })} {month.getFullYear()}</h3>
-          {i === monthOffset + 1 && (
-            <button className="nextMonth" onClick={handleNextMonth} disabled={monthOffset === 11}>
-              <i className="ri-arrow-drop-right-line"></i>
-            </button>
-          )}
+          {i === monthOffset + 1 && (<button className="nextMonth" onClick={handleNextMonth} disabled={monthOffset === 11}><i className="ri-arrow-drop-right-line"></i></button>)}
         </div>
         <div className="weekdays">
           {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map((day) => (
             <div key={day} className="weekday">{day}</div>
           ))}
         </div>
-        <div className="days-grid">
-          {days}
-        </div>
+        <div className="days-grid">{days}</div>
       </div>
     );
   });
@@ -87,17 +63,11 @@ const Calendar = ({ checkIn, checkOut, selectDates }) => {
     const firstMonth = months[monthOffset];
     const secondMonth = months[monthOffset + 1];
     return (
-      <div className="two-months-container">
-        {firstMonth}
-        {secondMonth}
-      </div>
+      <div className="two-months-container">{firstMonth}{secondMonth}</div>
     );
   };
 
-  return (
-    <div className="calendar-container">
-      {getTwoMonths()}
-    </div>
+  return (<div className="calendar-container">{getTwoMonths()}</div>
   );
 };
 
