@@ -2,6 +2,7 @@ import { useState } from 'react'
 import CurrencySwitcher from './components/CurrencySwitcher'
 import HotelSearch from './components/HotelSeach'
 import UserLocationInfo from './components/UserLocationInfo'
+import HomePageItems from './components/HomePageItems'
 import getHotels from './requests/getHotels'
 
 function App() {
@@ -43,6 +44,10 @@ function App() {
           <CurrencySwitcher currency={currency} setCurrency={setCurrency} />
           <button className='theme-switcher'><i className="ri-moon-line"></i></button>
         </div>
+      </div>
+      <div className="home-container">
+        <h1 className='home-title'>Find accommodation for your new trip<span>Search for your dream hotel for your comfortable vacation.</span></h1>
+        <HomePageItems setPlace={setPlace}/>
       </div>
     </>
   )

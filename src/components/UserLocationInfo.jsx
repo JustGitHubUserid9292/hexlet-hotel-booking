@@ -34,11 +34,11 @@ const UserLocationInfo = ({ location, setLocation }) => {
     }
   }, []);
 
-  return (
+  return (<>
     <div className="user-location">
       {isLoading ? <div className="spinner"><i className="ri-loader-4-line spinner-icon"></i></div> : <h1><i className="ri-map-pin-2-line"></i> {error ? error : `${location.city}, ${location.country}`}</h1>}
     </div>
-  );
-};
+  </>)
+}
 
 export default UserLocationInfo;

@@ -35,7 +35,7 @@ export const currencies = {
     RON: "Romanian Leu"
 };
 
-export const popularCities = {
+export const popularCitiesRelLocation = {
     "Italy": ["Rome", "Venice", "Florence", "Milan", "Naples"],
     "France": ["Paris", "Nice", "Marseille", "Lyon", "Bordeaux"],
     "Spain": ["Barcelona", "Madrid", "Seville", "Valencia", "Granada"],
@@ -72,4 +72,14 @@ export const formatDate = (dateString) => {
   
     return `${weekday}, ${day} ${month}`;
 };
+
+
+export const popularCities = [
+    "New York",
+    "Paris",
+    "Tokyo",
+    "London",
+    "Rome",
+    "Dubai",
+];
   

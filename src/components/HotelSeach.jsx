@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "./Calendar";
 import { formatDate } from "../assets/constants";
-import { popularCities } from "../assets/constants";
+import { popularCitiesRelLocation } from "../assets/constants";
+import getCityInfo from "../requests/getCityInfo";
 
 const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setCheckIn, checkOut, setCheckOut, adults, setAdults, childrens, setChilderns, rooms, setRooms }) => {
     const currentCountry = location.country
     const [showSuggestions, setShowSuggestions] = useState(false)
     const [showCalendar, setShowCalendar] = useState(false)
     const [showBookingDetails, setShowBookingDetails] = useState(false)
+    const [searchSuggestions, setSearchSuggestions] = useState([])
 
     const handleClickOutside = (e) => {
         if (showSuggestions && e.target.closest(".search-suggestions") === null) setShowSuggestions(false)
         if (showCalendar && e.target.closest(".calendar-popup") === null) setShowCalendar(false)
+        if (showBookingDetails && e.target.closest(".booking-details") === null) setShowBookingDetails(false)
     };
         
     useEffect(() => {
@@ -29,6 +32,31 @@ const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setChec
     
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [showCalendar]);
+
+    useEffect(() => {
+        if (showBookingDetails) document.addEventListener("mousedown", handleClickOutside);
+    
+        else document.removeEventListener("mousedown", handleClickOutside);
+    
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [showBookingDetails]);
+
+    useEffect(() => {
+        const fetchCityInfo = async () => {
+            if (!place) return;
+    
+            try {
+                const data = await getCityInfo(place);
+                setSearchSuggestions(data.filter(elm => elm.iataCode).slice(0, 5));
+            } catch (error) {
+                console.error("Error fetching city info:", error);
+                setSearchSuggestions([]); 
+            }
+        };
+    
+        setSearchSuggestions([]);
+        fetchCityInfo();
+    }, [place]);
 
 
     const toggleSearchSuggestions = () => {
@@ -93,7 +121,9 @@ const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setChec
                 <div className="search-suggestions-header">
                     <p className="search-suggestions-disc">Popular cities in relation to your location:</p>
                 </div>
-                {!currentCountry ? "" : popularCities[currentCountry].map(city => {
+                {place ? searchSuggestions.map(({ name }) => {
+                    return <a key={name} className="suggestions-item" onClick={() => {setPlace(name); setShowSuggestions(false)}}><i className="ri-map-pin-2-line"></i> {name}</a>
+                }) : !currentCountry ? "" : popularCitiesRelLocation[currentCountry].map(city => {
                     return <a key={city} className="suggestions-item" onClick={() => {setPlace(city); setShowSuggestions(false)}}><i className="ri-map-pin-2-line"></i> {city}</a>
                 })}
             </div>
@@ -101,11 +131,11 @@ const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setChec
             <div className={showCalendar ? "calendar-popup show" : "calendar-popup"}>
                 <Calendar checkIn={checkIn} checkOut={checkOut} selectDates={selectDates}/>
             </div>
-            <button className="booking-details-btn" onClick={toggleBookingDetails}><i className="ri-group-fill"></i> {adults} adult · {childrens} child · {rooms} room</button>
+            <button className={showBookingDetails ? "booking-details-btn focus" : "booking-details-btn"} onClick={toggleBookingDetails}><i className="ri-group-fill"></i> {adults} adult · {childrens} child · {rooms} room</button>
             <div className={showBookingDetails ? "booking-details show" : "booking-details"}>
-                Adults: <div className="booking-details-item"><button className="plus" onClick={handlePlusAdults}><i className="ri-add-line"></i></button><input type="number" className="adults" value={adults} readOnly></input><button className="minus" onClick={handleMinusAdults}><i className="ri-subtract-line"></i></button></div>
-                Childrens: <div className="booking-details-item"><button className="plus" onClick={handlePlusChildrens}><i className="ri-add-line"></i></button><input type="number" className="childrens" value={childrens} readOnly></input><button className="minus" onClick={handleMinusChildrens}><i className="ri-subtract-line"></i></button></div>
-                Rooms: <div className="booking-details-item"><button className="plus" onClick={handlePlusRooms}><i className="ri-add-line"></i></button><input type="number" className="rooms" value={rooms} readOnly></input><button className="minus" onClick={handleMinusRooms}><i className="ri-subtract-line"></i></button></div>
+                <div className="booking-details-item">Adults <div className="details-btns-container"><button className="plus" onClick={handlePlusAdults} disabled={adults === 9}><i className="ri-add-line"></i></button><input type="number" className="details-input" value={adults} readOnly></input><button className="minus" onClick={handleMinusAdults} disabled={adults === 1}><i className="ri-subtract-line"></i></button></div></div>
+                <div className="booking-details-item">Childrens <div className="details-btns-container"><button className="plus" onClick={handlePlusChildrens} disabled={childrens === 9}><i className="ri-add-line"></i></button><input type="number" className="details-input" value={childrens} readOnly></input><button className="minus" onClick={handleMinusChildrens} disabled={childrens === 0}><i className="ri-subtract-line"></i></button></div></div>
+                <div className="booking-details-item">Rooms <div className="details-btns-container"><button className="plus" onClick={handlePlusRooms} disabled={rooms === 9}><i className="ri-add-line"></i></button><input type="number" className="details-input" value={rooms} readOnly></input><button className="minus" onClick={handleMinusRooms} disabled={rooms === 1}><i className="ri-subtract-line"></i></button></div></div>
                 <button className="ready" onClick={toggleBookingDetails}>Ready</button>
             </div>
             <button className="search">Search</button>
