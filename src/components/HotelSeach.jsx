@@ -47,7 +47,7 @@ const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setChec
     
             try {
                 const data = await getCityInfo(place);
-                setSearchSuggestions(data.filter(elm => elm.iataCode).slice(0, 5));
+                return data && setSearchSuggestions(data.filter(elm => elm.iataCode).slice(0, 5));
             } catch (error) {
                 console.error("Error fetching city info:", error);
                 setSearchSuggestions([]); 
@@ -57,7 +57,6 @@ const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setChec
         setSearchSuggestions([]);
         fetchCityInfo();
     }, [place]);
-
 
     const toggleSearchSuggestions = () => {
         setShowSuggestions((prev) => !prev)
@@ -119,12 +118,12 @@ const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setChec
             <i id="input-icon" className="ri-home-4-line"></i><input type="text" value={place} onClick={toggleSearchSuggestions} className="search-input" placeholder="Where you want to go?" onChange={handleChange} />
             <div className={showSuggestions ? "search-suggestions show" : "search-suggestions"}>
                 <div className="search-suggestions-header">
-                    <p className="search-suggestions-disc">Popular cities in relation to your location:</p>
+                    <p className="search-suggestions-disc">{place ? `Results found for your query:` : "Popular cities in relation to your location:"}</p>
                 </div>
-                {place ? searchSuggestions.map(({ name }) => {
-                    return <a key={name} className="suggestions-item" onClick={() => {setPlace(name); setShowSuggestions(false)}}><i className="ri-map-pin-2-line"></i> {name}</a>
+                {place ? searchSuggestions.map(({ name, address }, index) => {
+                    return <a key={index} className="suggestions-item" onClick={() => {setPlace(name); setShowSuggestions(false)}}><i className="ri-map-pin-2-line"></i> {name}, {address.countryCode}</a>
                 }) : !currentCountry ? "" : popularCitiesRelLocation[currentCountry].map(city => {
-                    return <a key={city} className="suggestions-item" onClick={() => {setPlace(city); setShowSuggestions(false)}}><i className="ri-map-pin-2-line"></i> {city}</a>
+                    return <a key={city} className="suggestions-item" onClick={() => {setPlace(city); setShowSuggestions(false)}}><i className="ri-map-pin-2-line"></i> {city}, {currentCountry.slice(0, 2).toUpperCase()}</a>
                 })}
             </div>
             <button className={showCalendar ? "checkin-checkout focus" : "checkin-checkout"} onClick={toggleCalendar}><i className="ri-calendar-2-line"></i> {!checkIn ? "Check In" : formatDate(checkIn)} - {!checkOut ? "Check Out" : formatDate(checkOut)}</button>

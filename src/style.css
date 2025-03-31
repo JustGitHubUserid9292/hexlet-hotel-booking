@@ -232,6 +232,7 @@ body {
   display: none; 
   z-index: 10;
   transition: opacity 0.3s ease;
+  padding-bottom: 5px;
 }
   
 .search-suggestions.show {
@@ -503,12 +504,13 @@ body {
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 170px;
-  height: 240px;
+  height: 250px;
   color: black;
 }
 
 .popular-searches-item:hover {
   background-color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
 }
 
 .popular-city-image {
@@ -539,6 +541,10 @@ body {
   left: -5px;
 }
 
+.nextCity:hover, .prevCity:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
 .nextCity:disabled, .prevCity:disabled {
   color: transparent;
   cursor: default;
@@ -553,11 +559,17 @@ body {
   margin: 0;
 }
 
-.popular-city-hotels-count {
-  font-weight: bold;
+.popular-city-hotels-info {
+  margin-top: 5px;
 }
 
-.popular-city-hotels-count span {
+.popular-city-hotels-count, .popular-city-hotels-price {
+  font-weight: bold;
+  margin: 0;
+  font-size: 14px;
+}
+
+.popular-city-hotels-count span, .popular-city-hotels-price span {
   font-size: 12px;
   font-weight: normal;
 }

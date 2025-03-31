@@ -47,7 +47,7 @@ function App() {
       </div>
       <div className="home-container">
         <h1 className='home-title'>Find accommodation for your new trip<span>Search for your dream hotel for your comfortable vacation.</span></h1>
-        <HomePageItems setPlace={setPlace}/>
+        <HomePageItems currency={currency} setPlace={setPlace}/>
       </div>
     </>
   )

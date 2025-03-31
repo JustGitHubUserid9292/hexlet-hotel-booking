@@ -35,6 +35,44 @@ export const currencies = {
     RON: "Romanian Leu"
 };
 
+export const currenciesSymbols = {
+    USD: "$",    
+    EUR: "€",  
+    JPY: "¥",    
+    GBP: "£",   
+    AUD: "A$",   
+    CAD: "C$",  
+    CHF: "CHF",
+    CNY: "¥",   
+    SEK: "kr",   
+    NZD: "NZ$",  
+    MXN: "Mex$", 
+    SGD: "S$",   
+    HKD: "HK$",  
+    NOK: "kr",   
+    KRW: "₩",    
+    TRY: "₺",    
+    RUB: "₽",    
+    INR: "₹",    
+    BRL: "R$",   
+    ZAR: "R",    
+    DKK: "kr",   
+    PLN: "zł",   
+    THB: "฿",    
+    IDR: "Rp",   
+    HUF: "Ft",   
+    CZK: "Kč",   
+    ILS: "₪",    
+    CLP: "CLP$", 
+    PHP: "₱",    
+    AED: "د.إ",  
+    COP: "COL$", 
+    SAR: "﷼",    
+    MYR: "RM",   
+    RON: "lei"   
+};
+
+
 export const popularCitiesRelLocation = {
     "Italy": ["Rome", "Venice", "Florence", "Milan", "Naples"],
     "France": ["Paris", "Nice", "Marseille", "Lyon", "Bordeaux"],
@@ -82,4 +120,13 @@ export const popularCities = [
     "Rome",
     "Dubai",
 ];
+
+export const firstPriceIds = {
+    "New York": "MCNYCEXM",
+    "Paris": "RTPARMAI",
+    "Tokyo": "ICTYOICB",
+    "London": "MCLONPLM",
+    "Rome": "BWROM073",
+    "Dubai": "HLDXB111"
+}
   

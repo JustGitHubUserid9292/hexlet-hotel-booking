@@ -11,9 +11,10 @@ export default async function getCityInfo(cityName) {
         headers: { Authorization: `Bearer ${token}`}
       }
       );
+      
       const { data } = response.data
       return data
     } catch (error) {
-      console.log('Ошибка при получении данных о городе', error.response?.data || error.message)
+      console.error('Ошибка при получении данных о городе', error.response?.data || error.message)
     }
 }
