@@ -462,7 +462,7 @@ body {
   align-items: center;
 }
 
-.home-title {
+.home-title, .discount-title {
   display: flex;
   flex-direction: column;
   color: white;
@@ -474,7 +474,7 @@ body {
   font-size: 18px;
 }
 
-.popular-searches {
+.popular-searches, .new-user-discount {
   background-color: #0E1218;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -586,6 +586,65 @@ body {
 
 .popular-city-disc .spinner-icon {
   display: none;
+}
+
+.discount-title {
+  padding-right: 370px;
+}
+
+.new-user-discount {
+  position: relative;
+}
+
+.discount-logo {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  width: 80px;
+  height: 80px;
+}
+
+.new-user-discount-disc {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  padding-left: 25px;
+  gap: 5px;
+}
+
+.new-user-discount span {
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.new-user-discount-btns {
+  display: flex;
+  padding-left: 25px;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.new-user-discount-sign-in, .new-user-discount-register {
+  border: none;
+  color: #fff;
+  background-color: #007bff;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.new-user-discount-register {
+  border: 1px, solid, #007bff;
+  background-color: #fff;
+  color: #007bff;
+}
+
+.new-user-discount-sign-in:hover {
+  background-color: #015dc0;
+}
+
+.new-user-discount-register:hover {
+  background-color: #a0c4ff;
 }
 
   

@@ -5,9 +5,13 @@ import getHotels from "../requests/getHotels";
 import getHotelInfo from "../requests/getHotelInfo";
 import convertCurrency from "../requests/convertCurrency";
 
-const getImage = (logoName) => {
-    return new URL(`../assets/${logoName}.jpg`, import.meta.url).href;
+const getImage = (imageName) => {
+    return new URL(`../assets/${imageName}.jpg`, import.meta.url).href;
 };
+
+const getLogo = (logoName) => {
+    return new URL(`../assets/${logoName}.png`, import.meta.url).href;
+}
 
 const cityCode = async (cityName) => {
     const data = await getCityInfo(cityName);
@@ -111,7 +115,7 @@ const HomePageItems = ({ currency, setPlace }) => {
         }
     };
 
-    return (
+    return (<>
         <div className="popular-searches">
           <h1 className="popular-title">Popular Searches</h1>
           <div className="popular-searches-container">
@@ -128,7 +132,13 @@ const HomePageItems = ({ currency, setPlace }) => {
               <button className="nextCity" onClick={handleNext} disabled={startIndex + itemsPerPage >= popularCities.length}><i className="ri-arrow-drop-right-line"></i></button>
           </div>
         </div>
-      );
+        <h1 className="discount-title">Discounts for new users</h1>
+        <div className="new-user-discount">
+            <img className="discount-logo" src={getLogo("discount")} alt="discount-logo" />
+            <p className="new-user-discount-disc">Sign in to your account and save money<span>Save from 10% on your first hotel booking.</span></p>
+            <div className="new-user-discount-btns"><button className="new-user-discount-sign-in">Sign in</button><button className="new-user-discount-register">Register</button></div>
+        </div>
+      </>);
   }
   
   export default HomePageItems;
