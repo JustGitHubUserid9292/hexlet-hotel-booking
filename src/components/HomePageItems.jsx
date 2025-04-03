@@ -193,6 +193,6 @@ const HomePageItems = ({ currency, setPlace }) => {
             </div>
         </div>
       </>);
-  }
+}
   
-  export default HomePageItems;
+export default HomePageItems;
