@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { popularCities, firstPriceIds, currenciesSymbols } from "../assets/constants";
+import RegistrationForm from "./RegistrationForm";
+import SignInForm from "./SignInForm";
 import getCityInfo from "../requests/getCityInfo";
 import getHotels from "../requests/getHotels";
 import getHotelInfo from "../requests/getHotelInfo";
@@ -47,12 +49,34 @@ const saveToLocalStorage = (key, data) => {
     localStorage.setItem(key, JSON.stringify(data));
 };
 
-const HomePageItems = ({ currency, setPlace }) => {
+const HomePageItems = ({ currency, setPlace, showRegistration, setShowRegistration, showSignIn, setShowSignIn }) => {
     const [startIndex, setStartIndex] = useState(0);
     const [isNext, setNext] = useState(false)
     const [hotelsInfo, setHotelsInfo] = useState(loadFromLocalStorage("hotelsInfo") || {});
     const [isLoading, setLoading] = useState(false)
     const itemsPerPage = 4;
+
+    const handleClickOutside = (e) => {
+        if (showRegistration && e.target.closest(".registration-form") === null) {
+            setShowRegistration(false);
+        }
+        if (showSignIn && e.target.closest(".signin-form") === null) {
+            setShowSignIn(false);
+        }
+    };
+    
+    useEffect(() => {
+        if (showSignIn || showRegistration) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+    
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [showSignIn, showRegistration]);
+    
 
     useEffect(() => {
         const fetchHotelsData = async () => {
@@ -141,8 +165,10 @@ const HomePageItems = ({ currency, setPlace }) => {
         <div className="new-user-discount">
             <img className="discount-logo" src={getLogo("discount")} alt="discount-logo" />
             <p className="new-user-discount-disc">Sign in to your account and save money<span>Save from 10% on your first hotel booking.</span></p>
-            <div className="new-user-discount-btns"><button className="new-user-discount-sign-in">Sign in</button><button className="new-user-discount-register">Register</button></div>
+            <div className="new-user-discount-btns"><button className="new-user-discount-sign-in" onClick={() => setShowSignIn(true)}>Sign in</button><button className="new-user-discount-register" onClick={() => setShowRegistration(true)}>Register</button></div>
         </div>
+        <RegistrationForm setShowRegistration={setShowRegistration} setShowSignIn={setShowSignIn} showRegistration={showRegistration}/>
+        <SignInForm showSignin={showSignIn}/>
         <h1 className="travel-blog-title">A travel blog for inspiration on your next trip</h1>
         <div className="travel-blog">
             <h1 className="travel-container-title">Popular Articles</h1>

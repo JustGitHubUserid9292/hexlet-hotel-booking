@@ -60,7 +60,7 @@ body {
 }
   
 
-.currency, .theme-switcher {
+.currency, .theme-switcher, .profile {
   font-size: 16px;
   background-color: transparent;
   color: white;
@@ -70,8 +70,9 @@ body {
   border-radius: 5px;
 }
 
-.currency:hover, .theme-switcher:hover {
+.currency:hover, .theme-switcher:hover, .profile:hover {
   background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
 }
 
 .modal-overlay {
@@ -185,7 +186,9 @@ body {
 .search-input,
 .checkin-checkout,
 .booking-details-btn,
-.search {
+.search,
+.registration-item input,
+.signin-item input {
   background-color: #fff;
   padding: 15px 10px;
   border: 2px solid #ddd;
@@ -206,6 +209,8 @@ body {
 }
 
 .search-input:focus,
+.registration-item input:focus,
+.signin-item input:focus,
 .checkin-checkout.focus,
 .booking-details-btn.focus {
   border-color: #0056b3;
@@ -534,7 +539,6 @@ body {
   padding: 0;
   margin: 0;
   cursor: pointer;
-  z-index: 10;
 }
 
 .nextCity {
@@ -857,6 +861,114 @@ footer {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+
+.registration-form, .signin-form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  width: 60%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+.registration-title, .signin-title {
+  font-size: 24px;
+  align-self: center;
+}
+
+.registration-item, .signin-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.registration-item span, .signin-item span {
+  padding-left: 5px;
+  font-size: 14px;
+}
+
+.registration-item input, .signin-item input {
+  padding: 10px 10px;
+  font-size: 14px;
+  flex: 1
+}
+
+.registration-confirm, .signin-confirm {
+  border: none;
+  color: #fff;
+  background-color: #007bff;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 32px;
+}
+
+.registration-confirm:hover, .signin-confirm:hover {
+  background-color: #015dc0;
+}
+
+.password-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.show-password {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.show-password:disabled {
+  display: none;
+}
+
+.reg-check {
+  padding-top: 20px;
+  padding-left: 5px;
+  align-self: center;
+  font-size: 14px;
+}
+
+.reg-check a {
+  cursor: pointer;
+  color: #007bff;
+}
+
+.forget-password {
+  width: 120px;
+  padding-left: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.reg-check a:hover, .forget-password:hover {
+  color: #015dc0;
+}
+
+.form-error-text {
+  padding: 0;
+  margin: 0;
+  padding-left: 5px;
+  font-size: 14px;
+  color: rgba(255, 0, 0, 0.753);
+}
+
+.registration-item.error input, .signin-item.error input {
+  border-color: #cb3a3a;
+  box-shadow: 0 4px 15px rgba(0, 86, 179, 0.4);
+}
   
   
   

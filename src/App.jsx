@@ -19,6 +19,8 @@ function App() {
   const [adults, setAdults] = useState(1)
   const [childrens, setChilderns] = useState(0)
   const [rooms, setRooms] = useState(1)
+  const [showRegistration, setShowRegistration] = useState(false)
+  const [showSignIn, setShowSignIn] = useState(false)
 
   const handleChange = (e) => {
     setPlace(e.target.value)
@@ -47,12 +49,13 @@ function App() {
         />
         <div className='site-config'>
           <CurrencySwitcher currency={currency} setCurrency={setCurrency} />
+          <button className='profile' onClick={() => setShowRegistration(true)}><i className="ri-user-3-line"></i></button>
           <button className='theme-switcher'><i className="ri-moon-line"></i></button>
         </div>
       </div>
       <div className="home-container">
         <h1 className='home-title'>Find accommodation for your new trip<span>Search for your dream hotel for your comfortable vacation.</span></h1>
-        <HomePageItems currency={currency} setPlace={setPlace}/>
+        <HomePageItems currency={currency} setPlace={setPlace} showRegistration={showRegistration} setShowRegistration={setShowRegistration} showSignIn={showSignIn} setShowSignIn={setShowSignIn}/>
       </div>
       <ScrollToTopButton />
       <footer>
@@ -83,4 +86,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
