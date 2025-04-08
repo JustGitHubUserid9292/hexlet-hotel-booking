@@ -36,9 +36,6 @@ const MapComponent = ({ hotelsList, request, activeHotelId }) => {
         scrollWheelZoom={true}
         style={{ height: "90%", width: "95%", borderRadius: "12px" }}
         attributionControl={false}
-        whenCreated={(map) => {
-            map.attributionControl.setPrefix('');
-          }}
       >
         <TileLayer
            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"

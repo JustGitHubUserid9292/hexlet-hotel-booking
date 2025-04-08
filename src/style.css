@@ -1086,27 +1086,34 @@ footer {
   transform: translate(-50%, -50%);
 }
 
-.load-more-wrapper {
+.pagination {
   display: flex;
   justify-content: center;
-  margin: 12px 0;
+  gap: 8px;
+  margin-top: 20px;
+  flex-wrap: wrap;
 }
 
-.load-more-btn {
-  color: white;
+.page-btn {
+  padding: 8px 14px;
   background-color: transparent;
+  color: #fff;
   border: none;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 500;
+  border-radius: 6px;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.load-more-btn:hover {
+.page-btn:hover {
   background-color: rgba(255, 255, 255, 0.1);
-  cursor: pointer;
 }
+
+.page-btn.active {
+  background-color: #007BFF;
+  color: white;
+  border-color: #007BFF;
+}
+
 
 
   

@@ -54,10 +54,14 @@ const HotelsList = ({ place, isSearch, setSearch, showHotelsList }) => {
         if (isSearch) {
             fetchHotels();
             setSearch(false)
+            setStartIndex(0)
         }
     }, [place, isSearch]);
 
+
     const hotelsToDisplay = list.slice(startIndex, startIndex + itemsPerPage)
+
+    const totalPages = Math.ceil(list.length / itemsPerPage);
 
     return (
         <>  
@@ -74,7 +78,7 @@ const HotelsList = ({ place, isSearch, setSearch, showHotelsList }) => {
                                 <div className="hotel-info">
                                     <div className="hotel-header">
                                         <h2 className="hotel-title">{normalize(name)}</h2>
-                                        <span className="hotel-address"><i className="ri-map-pin-2-line"></i> {request}, {address.countryCode}</span>
+                                        <span className="hotel-address"><i className="ri-map-pin-2-line"></i> {request}, {address?.countryCode || "N/A"}</span>
                                     </div>
                                     <span>The latest update to the hotel information in the API: {formatDate(lastUpdate, "year")}</span>
                                     <span className="more-info">Click on card to see more information.</span>
@@ -82,7 +86,10 @@ const HotelsList = ({ place, isSearch, setSearch, showHotelsList }) => {
                             </div>
                         );
                     })}
-                    <div className="load-more-wrapper"><button className="load-more-btn">Load more</button></div>
+                    <div className="pagination">
+                        {Array.from({ length: totalPages }, (_, i) => (
+                        <button key={i} onClick={() => setStartIndex(i * itemsPerPage)} className={`page-btn ${startIndex / itemsPerPage === i ? 'active' : ''}`}>{i + 1}</button>))}
+                    </div>
                 </div>}
             </div>
             <div className="hotels-map">
