@@ -6,9 +6,7 @@ const schema = Yup.object().shape({
     surname: Yup.string().required("Surname is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
-    confirm: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .required("Confirm your password"),
+    confirm: Yup.string().oneOf([Yup.ref("password"), null], "Passwords must match").required("Confirm your password")
 });
 
 const RegistrationForm = ({ setShowRegistration, setShowSignIn, showRegistration }) => {

@@ -4,7 +4,7 @@ import { formatDate } from "../assets/constants";
 import { popularCitiesRelLocation } from "../assets/constants";
 import getCityInfo from "../requests/getCityInfo";
 
-const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setCheckIn, checkOut, setCheckOut, adults, setAdults, childrens, setChilderns, rooms, setRooms }) => {
+const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setCheckIn, checkOut, setCheckOut, adults, setAdults, childrens, setChilderns, rooms, setRooms, setShowHotelsList, setSearch }) => {
     const currentCountry = location.country
     const [showSuggestions, setShowSuggestions] = useState(false)
     const [showCalendar, setShowCalendar] = useState(false)
@@ -113,6 +113,14 @@ const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setChec
         return rooms > 1 && setRooms((prev) => prev - 1)
     }
 
+    const handleSearch = (place) => {
+        if (place) {
+            setShowHotelsList(true)
+            setSearch(true)
+        }
+        return;
+    }
+
     return (<>
         <div className="hotel-search">
             <i id="input-icon" className="ri-home-4-line"></i><input type="text" value={place} onClick={toggleSearchSuggestions} className="search-input" placeholder="Where you want to go?" onChange={handleChange} />
@@ -137,7 +145,7 @@ const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setChec
                 <div className="booking-details-item">Rooms <div className="details-btns-container"><button className="plus" onClick={handlePlusRooms} disabled={rooms === 9}><i className="ri-add-line"></i></button><input type="number" className="details-input" value={rooms} readOnly></input><button className="minus" onClick={handleMinusRooms} disabled={rooms === 1}><i className="ri-subtract-line"></i></button></div></div>
                 <button className="ready" onClick={toggleBookingDetails}>Ready</button>
             </div>
-            <button className="search">Search</button>
+            <button className="search" onClick={() => {handleSearch(place)}}>Search</button>
         </div>
     </>)
 }

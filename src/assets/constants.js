@@ -102,13 +102,14 @@ export const popularCitiesRelLocation = {
 }
 
 
-export const formatDate = (dateString) => {
+export const formatDate = (dateString, type = "default") => {
     const date = new Date(dateString);
     const day = date.getDate();
     const weekday = date.toLocaleString("en", { weekday: "short" }); 
     const month = date.toLocaleString("en", { month: "short" });
+    const year = date.getFullYear();
   
-    return `${weekday}, ${day} ${month}`;
+    return type === "default" ? `${weekday}, ${day} ${month}` : `${weekday}, ${day} ${month} ${year}`;
 };
 
 

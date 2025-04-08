@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import CurrencySwitcher from './components/CurrencySwitcher'
 import HotelSearch from './components/HotelSeach'
 import UserLocationInfo from './components/UserLocationInfo'
 import HomePageItems from './components/HomePageItems'
 import ScrollToTopButton from './components/ScrolltoTopBtn'
-import getHotels from './requests/getHotels'
+import RegistrationForm from "./components/RegistrationForm";
+import SignInForm from "./components/SignInForm";
+import HotelsList from './components/HotelsList'
 
 const getLogo = (logoName) => {
   return new URL(`./assets/${logoName}.png`, import.meta.url).href;
@@ -21,6 +23,29 @@ function App() {
   const [rooms, setRooms] = useState(1)
   const [showRegistration, setShowRegistration] = useState(false)
   const [showSignIn, setShowSignIn] = useState(false)
+  const [showHotelsList, setShowHotelsList] = useState(false)
+  const [isSearch, setSearch] = useState(false)
+
+  const handleClickOutside = (e) => {
+          if (showRegistration && e.target.closest(".registration-form") === null) {
+              setShowRegistration(false);
+          }
+          if (showSignIn && e.target.closest(".signin-form") === null) {
+              setShowSignIn(false);
+          }
+      };
+      
+      useEffect(() => {
+          if (showSignIn || showRegistration) {
+              document.addEventListener("mousedown", handleClickOutside);
+          } else {
+              document.removeEventListener("mousedown", handleClickOutside);
+          }
+      
+          return () => {
+              document.removeEventListener("mousedown", handleClickOutside);
+          };
+    }, [showSignIn, showRegistration]);
 
   const handleChange = (e) => {
     setPlace(e.target.value)
@@ -30,12 +55,12 @@ function App() {
     <>
       <UserLocationInfo location={location} setLocation={setLocation}/>
       <div className='header'>
-        <h1 className='title'>HotelBooking<span>.</span></h1>
+        <h1 className='title' title='Home' onClick={() => setShowHotelsList(false)}>HotelBooking<span>.</span></h1>
         <HotelSearch 
         handleChange={handleChange} 
         location={location} 
         place={place} 
-        setPlace={setPlace} 
+        setPlace={setPlace}
         checkIn={checkIn} 
         setCheckIn={setCheckIn} 
         checkOut={checkOut} 
@@ -45,7 +70,9 @@ function App() {
         childrens={childrens} 
         setChilderns={setChilderns} 
         rooms={rooms} 
-        setRooms={setRooms} 
+        setRooms={setRooms}
+        setShowHotelsList={setShowHotelsList} 
+        setSearch={setSearch}
         />
         <div className='site-config'>
           <CurrencySwitcher currency={currency} setCurrency={setCurrency} />
@@ -53,10 +80,13 @@ function App() {
           <button className='theme-switcher'><i className="ri-moon-line"></i></button>
         </div>
       </div>
+      {showHotelsList ? <HotelsList place={place} setPlace={setPlace} isSearch={isSearch} setSearch={setSearch} showHotelsList={showHotelsList} /> : 
       <div className="home-container">
         <h1 className='home-title'>Find accommodation for your new trip<span>Search for your dream hotel for your comfortable vacation.</span></h1>
-        <HomePageItems currency={currency} setPlace={setPlace} showRegistration={showRegistration} setShowRegistration={setShowRegistration} showSignIn={showSignIn} setShowSignIn={setShowSignIn}/>
-      </div>
+        <HomePageItems currency={currency} setPlace={setPlace} setShowRegistration={setShowRegistration} setShowSignIn={setShowSignIn} />
+      </div>}
+      <RegistrationForm setShowRegistration={setShowRegistration} setShowSignIn={setShowSignIn} showRegistration={showRegistration} />
+      <SignInForm showSignin={showSignIn} />
       <ScrollToTopButton />
       <footer>
         <div className='footer-header'>
