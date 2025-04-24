@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 const schema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Email is required"),
 });
 
-const SignInForm = ({ showSignin }) => {
+const SignInForm = ({ showSignin, setShowSignIn }) => {
     const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState({
         email: "",
@@ -54,6 +55,8 @@ const SignInForm = ({ showSignin }) => {
         setShowPassword((prev) => !prev)
     }
 
+    const navigate = useNavigate()
+
     return (<>
         <div className={showSignin ? "modal-overlay show" : "modal-overlay"}>
             <form className="signin-form" onSubmit={handleSubmit}>
@@ -67,7 +70,7 @@ const SignInForm = ({ showSignin }) => {
                     <span>Password</span>
                     <div className="password-input"><input type={showPassword ? "text" : "password"} name="password" placeholder="Enter your password" value={formData.password} onChange={handleChange} /><button className="show-password" onClick={handleShowPassword} disabled={!formData.password}>{showPassword ? <i className="ri-eye-line"></i> : <i className="ri-eye-off-line"></i>}</button></div>
                 </div>
-                <a className="forget-password">Forget password?</a>
+                <a className="forget-password" onClick={() => { navigate("/password-recovery"); setShowSignIn(false)}}>Forget password?</a>
                 <button className="signin-confirm" type="submit">Sign in</button>
             </form>
         </div>

@@ -7,6 +7,7 @@ import ScrollToTopButton from './components/ScrolltoTopBtn'
 import RegistrationForm from "./components/RegistrationForm";
 import SignInForm from "./components/SignInForm";
 import HotelsList from './components/HotelsList'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 
 const getLogo = (logoName) => {
   return new URL(`./assets/${logoName}.png`, import.meta.url).href;
@@ -23,8 +24,9 @@ function App() {
   const [rooms, setRooms] = useState(1)
   const [showRegistration, setShowRegistration] = useState(false)
   const [showSignIn, setShowSignIn] = useState(false)
-  const [showHotelsList, setShowHotelsList] = useState(false)
   const [isSearch, setSearch] = useState(false)
+
+  const navigate = useNavigate()
 
   const handleClickOutside = (e) => {
           if (showRegistration && e.target.closest(".registration-form") === null) {
@@ -35,17 +37,17 @@ function App() {
           }
       };
       
-      useEffect(() => {
-          if (showSignIn || showRegistration) {
-              document.addEventListener("mousedown", handleClickOutside);
-          } else {
-              document.removeEventListener("mousedown", handleClickOutside);
-          }
+  useEffect(() => {
+      if (showSignIn || showRegistration) {
+          document.addEventListener("mousedown", handleClickOutside);
+      } else {
+          document.removeEventListener("mousedown", handleClickOutside);
+      }
       
-          return () => {
-              document.removeEventListener("mousedown", handleClickOutside);
-          };
-    }, [showSignIn, showRegistration]);
+      return () => {
+         document.removeEventListener("mousedown", handleClickOutside);
+      };
+  }, [showSignIn, showRegistration]);
 
   const handleChange = (e) => {
     setPlace(e.target.value)
@@ -55,7 +57,7 @@ function App() {
     <>
       <UserLocationInfo location={location} setLocation={setLocation}/>
       <div className='header'>
-        <h1 className='title' title='Home' onClick={() => setShowHotelsList(false)}>HotelBooking<span>.</span></h1>
+        <h1 className='title' title='Home' onClick={() => navigate('/')}>HotelBooking<span>.</span></h1>
         <HotelSearch 
         handleChange={handleChange} 
         location={location} 
@@ -71,7 +73,6 @@ function App() {
         setChilderns={setChilderns} 
         rooms={rooms} 
         setRooms={setRooms}
-        setShowHotelsList={setShowHotelsList} 
         setSearch={setSearch}
         />
         <div className='site-config'>
@@ -80,13 +81,28 @@ function App() {
           <button className='theme-switcher'><i className="ri-moon-line"></i></button>
         </div>
       </div>
-      {showHotelsList ? <HotelsList place={place} setPlace={setPlace} isSearch={isSearch} setSearch={setSearch} showHotelsList={showHotelsList} /> : 
-      <div className="home-container">
-        <h1 className='home-title'>Find accommodation for your new trip<span>Search for your dream hotel for your comfortable vacation.</span></h1>
-        <HomePageItems currency={currency} setPlace={setPlace} setShowRegistration={setShowRegistration} setShowSignIn={setShowSignIn} />
-      </div>}
+      <Routes>
+        <Route path="/"
+          element={
+            <div className="home-container">
+              <h1 className='home-title'>
+                Find accommodation for your new trip
+                <span>Search for your dream hotel for your comfortable vacation.</span>
+              </h1>
+              <HomePageItems
+                currency={currency}
+                setPlace={setPlace}
+                setShowRegistration={setShowRegistration}
+                setShowSignIn={setShowSignIn}
+              />
+            </div>
+          }
+        />
+        <Route path="/hotels-list" element={ <HotelsList place={place} setPlace={setPlace} isSearch={isSearch} setSearch={setSearch} /> }/>
+        <Route path="*" element={<div className="page-not-found"><h1><i id="page-not-found-icon" className="ri-pages-line"></i>Page not found</h1><button onClick={() => navigate("/")}>Go home</button></div>}></Route>
+      </Routes>
       <RegistrationForm setShowRegistration={setShowRegistration} setShowSignIn={setShowSignIn} showRegistration={showRegistration} />
-      <SignInForm showSignin={showSignIn} />
+      <SignInForm showSignin={showSignIn} setShowSignIn={setShowSignIn} />
       <ScrollToTopButton />
       <footer>
         <div className='footer-header'>

@@ -3,6 +3,9 @@ import getCityInfo from "../requests/getCityInfo";
 import getHotels from "../requests/getHotels";
 import { formatDate } from "../assets/constants";
 import MapComponent from "./MapComponent";
+import { useNavigate, useLocation } from "react-router-dom";
+import getHotelInfo from "../requests/getHotelInfo";
+import HotelPage from "./HotelPage";
 
 const getImage = (imageName) => {
     return new URL(`../assets/${imageName}.jpg`, import.meta.url).href;
@@ -17,7 +20,7 @@ const normalize = (text) => {
     return text.split(' ').map(elm => elm[0] + elm.slice(1, elm.length).toLowerCase()).join(' ')
 }
 
-const HotelsList = ({ place, isSearch, setSearch, showHotelsList }) => {
+const HotelsList = ({ place, setPlace, isSearch, setSearch }) => {
     const [list, setList] = useState([])
     const [startIndex, setStartIndex] = useState(0)
     const itemsPerPage = 50
@@ -25,15 +28,26 @@ const HotelsList = ({ place, isSearch, setSearch, showHotelsList }) => {
     const [hotelsCountState, setHotelsCountState] = useState(0)
     const [isLoading, setLoading] = useState(false)
     const [activeHotelId, setActiveHotelId] = useState(null);
+    const [hotelName, setHotelName] = useState("")
+    const [isEmpty, setEmpty] = useState(false)
+    const [hotelInfo, setHotelInfo] = useState({})
+    const [isHotelPageShow, setShowHotelPage] = useState(false)
+
+    const urlLocation = useLocation()
+
+    const navigate = useNavigate()
 
     useEffect(() => {
-        if (!showHotelsList) {
-            setHotelsCountState(0)
-            setRequest("")
-            setStartIndex(0)
-            setList([])
+        const currentPlace = new URLSearchParams(urlLocation.search).get("place") || "";
+    
+        if (currentPlace && currentPlace !== place) {
+            setPlace(currentPlace);
+            setSearch(true);
         }
-    }, [showHotelsList])
+        if (!currentPlace) {
+            navigate('/*')
+        }
+    }, [urlLocation.search]);
 
     useEffect(() => {
         const fetchHotels = async () => {
@@ -46,32 +60,54 @@ const HotelsList = ({ place, isSearch, setSearch, showHotelsList }) => {
             setHotelsCountState(data.length);
         } catch (e) {
             console.error(e)
+            setRequest(place)
+            setEmpty(true)
         } finally {
             setLoading(false)
         }
         }
 
         if (isSearch) {
-            fetchHotels();
+            fetchHotels()
+            setEmpty(false)
             setSearch(false)
             setStartIndex(0)
         }
     }, [place, isSearch]);
 
+    const handleChange = (e) => {
+        setHotelName(e.target.value)
+        setStartIndex(0)
+    }
 
-    const hotelsToDisplay = list.slice(startIndex, startIndex + itemsPerPage)
+    const filteredList = list.filter(hotel => normalize(hotel.name).toLowerCase().includes(hotelName.toLowerCase()));
 
-    const totalPages = Math.ceil(list.length / itemsPerPage);
+    const hotelsToDisplay = filteredList.slice(startIndex, startIndex + itemsPerPage)
+
+    const totalPages = Math.ceil(filteredList.length / itemsPerPage);
+
+    const inputFocus = () => {
+        const input = document.querySelector(".search-input");
+        input?.focus();
+        input?.click()
+    }
+
+    const handleGetHotelInfo = async (hotelId) => {
+        const data = await getHotelInfo(hotelId)
+        setHotelInfo(data)
+    }
 
     return (
         <>  
+            {isEmpty && <div className="nothing-found"><i id="nothing-found-icon" className="ri-search-line"></i><h1>{request}: nothing found<span>We didn't find any accommodation according to your search criteria. Try changing them.</span></h1><button onClick={inputFocus}>Change search criteria</button></div>}
             <div className="hotels-page">
             <div className="hotels-list">
-                <h1 className="hotels-found"> {isLoading ? `Search results for ${place}...`: `We found ${hotelsCountState} hotels by request ${request}.`}</h1>
-                {isLoading ? <div className="spinner"><i className="ri-loader-4-line spinner-icon"></i></div> : <div className="hotels-items">
+                {!isEmpty && <h1 className="hotels-found"> {isLoading ? `Search results for ${place}...`: `We found ${hotelsCountState} hotels by request ${request}.`}</h1>}
+                {isLoading ? <div className="spinner"><i className="ri-loader-4-line spinner-icon"></i></div> : !isEmpty && <div className="hotels-items">
+                    <div className="hotels-list-search-wrapper"><i id="hotels-list-search-icon" className="ri-search-line"></i><input type="text" className="hotels-list-search" value={hotelName} placeholder="Looking for a hotel?" onChange={handleChange} /></div>
                     {hotelsToDisplay.map(({ name, hotelId, address, lastUpdate }) => {
                         return (
-                            <div className="hotel-item" key={hotelId} id={`hotel-${hotelId}`} onMouseEnter={() => setActiveHotelId(hotelId)} onMouseLeave={() => setActiveHotelId(null)}>
+                            <div className="hotel-item" key={hotelId} id={`hotel-${hotelId}`} onClick={() => { handleGetHotelInfo(hotelId); setShowHotelPage(true)}} onMouseEnter={() => setActiveHotelId(hotelId)} onMouseLeave={() => setActiveHotelId(null)}>
                                 <div className="hotel-image">
                                     <img src={getImage("Image-not-found")} alt="hotel-image"/>
                                 </div>
@@ -86,15 +122,16 @@ const HotelsList = ({ place, isSearch, setSearch, showHotelsList }) => {
                             </div>
                         );
                     })}
+                    <HotelPage isHotelPageShow={isHotelPageShow} setShowHotelPage={setShowHotelPage} />
                     <div className="pagination">
                         {Array.from({ length: totalPages }, (_, i) => (
                         <button key={i} onClick={() => setStartIndex(i * itemsPerPage)} className={`page-btn ${startIndex / itemsPerPage === i ? 'active' : ''}`}>{i + 1}</button>))}
                     </div>
                 </div>}
             </div>
-            <div className="hotels-map">
+            {!isEmpty && <div className="hotels-map">
                 {!isLoading && <MapComponent hotelsList={hotelsToDisplay} request={request} activeHotelId={activeHotelId} />}
-            </div>
+            </div>}
             </div>
         </>
     );

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
+
 body {
   background-color: #050505;
   margin: 0;
@@ -191,6 +192,7 @@ body {
 .checkin-checkout,
 .booking-details-btn,
 .search,
+.hotels-list-search,
 .registration-item input,
 .signin-item input {
   background-color: #fff;
@@ -207,6 +209,7 @@ body {
 .search-input:hover,
 .checkin-checkout:hover,
 .booking-details-btn:hover,
+.hotels-list-search:hover,
 .search:hover {
   border-color: #007bff;
   box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
@@ -215,6 +218,7 @@ body {
 .search-input:focus,
 .registration-item input:focus,
 .signin-item input:focus,
+.hotels-list-search:focus,
 .checkin-checkout.focus,
 .booking-details-btn.focus {
   border-color: #0056b3;
@@ -895,7 +899,7 @@ footer {
   font-size: 14px;
 }
 
-.registration-item input, .signin-item input {
+.registration-item input, .signin-item input, .hotels-list-search {
   padding: 10px 10px;
   font-size: 14px;
   flex: 1
@@ -1020,9 +1024,17 @@ footer {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
+.hotel-item.active .hotel-address i {
+  color: red;
+}
+
 .hotel-item:hover {
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0.9);
+}
+
+.hotel-item:hover .hotel-address i {
+  color: red;
 }
 
 .hotel-image {
@@ -1112,6 +1124,80 @@ footer {
   background-color: #007BFF;
   color: white;
   border-color: #007BFF;
+}
+
+.hotels-list-search-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-left: 10px;
+  width: 100%;
+}
+
+.hotels-list-search {
+  padding: 10px 10px 10px 36px;
+  width: 225px;
+}
+
+#hotels-list-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  color: black;
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.nothing-found, .page-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  gap: 5px;
+  height: 59vh;
+}
+
+.nothing-found h1, .page-not-found h1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 28px;
+  gap: 10px;
+  font-weight: bold;
+}
+
+.nothing-found span {
+  font-size: 18px;
+}
+
+.nothing-found #nothing-found-icon, .page-not-found #page-not-found-icon {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.nothing-found button, .page-not-found button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.nothing-found button:hover, .page-not-found button:hover {
+  background-color: #015dc0;
+}
+
+.hotel-page-info {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 

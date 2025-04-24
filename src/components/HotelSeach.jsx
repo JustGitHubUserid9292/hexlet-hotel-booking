@@ -3,13 +3,16 @@ import Calendar from "./Calendar";
 import { formatDate } from "../assets/constants";
 import { popularCitiesRelLocation } from "../assets/constants";
 import getCityInfo from "../requests/getCityInfo";
+import { useNavigate } from 'react-router-dom'
 
-const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setCheckIn, checkOut, setCheckOut, adults, setAdults, childrens, setChilderns, rooms, setRooms, setShowHotelsList, setSearch }) => {
+const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setCheckIn, checkOut, setCheckOut, adults, setAdults, childrens, setChilderns, rooms, setRooms, setSearch }) => {
     const currentCountry = location.country
     const [showSuggestions, setShowSuggestions] = useState(false)
     const [showCalendar, setShowCalendar] = useState(false)
     const [showBookingDetails, setShowBookingDetails] = useState(false)
     const [searchSuggestions, setSearchSuggestions] = useState([])
+
+    const navigate = useNavigate()
 
     const handleClickOutside = (e) => {
         if (showSuggestions && e.target.closest(".search-suggestions") === null) setShowSuggestions(false)
@@ -115,8 +118,8 @@ const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setChec
 
     const handleSearch = (place) => {
         if (place) {
-            setShowHotelsList(true)
             setSearch(true)
+            navigate(`/hotels-list?place=${place}`)
         }
         return;
     }

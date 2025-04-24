@@ -5,8 +5,8 @@ export default async function getAccessToken() {
       'https://test.api.amadeus.com/v1/security/oauth2/token',
       new URLSearchParams({
         grant_type: 'client_credentials',
-        client_id: import.meta.env.VITE_AMADEUS_API_KEY1, 
-        client_secret: import.meta.env.VITE_AMADEUS_API_SECRET1, 
+        client_id: import.meta.env.VITE_AMADEUS_API_KEY, 
+        client_secret: import.meta.env.VITE_AMADEUS_API_SECRET, 
       })
     );
   
