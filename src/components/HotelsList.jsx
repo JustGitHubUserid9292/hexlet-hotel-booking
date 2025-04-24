@@ -30,7 +30,7 @@ const HotelsList = ({ place, setPlace, isSearch, setSearch }) => {
     const [activeHotelId, setActiveHotelId] = useState(null);
     const [hotelName, setHotelName] = useState("")
     const [isEmpty, setEmpty] = useState(false)
-    const [hotelInfo, setHotelInfo] = useState({})
+    const [hotelInfo, setHotelInfo] = useState([])
     const [isHotelPageShow, setShowHotelPage] = useState(false)
 
     const urlLocation = useLocation()
@@ -122,7 +122,7 @@ const HotelsList = ({ place, setPlace, isSearch, setSearch }) => {
                             </div>
                         );
                     })}
-                    <HotelPage isHotelPageShow={isHotelPageShow} setShowHotelPage={setShowHotelPage} />
+                    <HotelPage isHotelPageShow={isHotelPageShow} setShowHotelPage={setShowHotelPage} hotelInfo={hotelInfo}/>
                     <div className="pagination">
                         {Array.from({ length: totalPages }, (_, i) => (
                         <button key={i} onClick={() => setStartIndex(i * itemsPerPage)} className={`page-btn ${startIndex / itemsPerPage === i ? 'active' : ''}`}>{i + 1}</button>))}

@@ -1196,12 +1196,34 @@ footer {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   width: 60%;
   display: flex;
-  flex-direction: column;
   gap: 10px;
 }
 
+.hotel-page-name {
+  color: #000;
+}
+
+.hotel-page-description {
+  color: #000
+}
+
+.hotel-page-price {
+  color: #000
+}
+
+.hotel-reserve {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 25px 20px;
+  cursor: pointer;
+  margin-left: 800px;
+}
+
+.hotel-reserve:hover {
+  background-color: #015dc0;
+}
 
 
-  
-  
   
