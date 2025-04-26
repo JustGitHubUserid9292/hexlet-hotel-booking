@@ -20,7 +20,7 @@ function App() {
   const [checkIn, setCheckIn] = useState(null)
   const [checkOut, setCheckOut] = useState(null)
   const [adults, setAdults] = useState(1)
-  const [childrens, setChilderns] = useState(0)
+  const [children, setChildren] = useState(0)
   const [rooms, setRooms] = useState(1)
   const [showRegistration, setShowRegistration] = useState(false)
   const [showSignIn, setShowSignIn] = useState(false)
@@ -69,8 +69,8 @@ function App() {
         setCheckOut={setCheckOut} 
         adults={adults} 
         setAdults={setAdults} 
-        childrens={childrens} 
-        setChilderns={setChilderns} 
+        children={children} 
+        setChildren={setChildren} 
         rooms={rooms} 
         setRooms={setRooms}
         setSearch={setSearch}
@@ -98,7 +98,7 @@ function App() {
             </div>
           }
         />
-        <Route path="/hotels-list" element={ <HotelsList place={place} setPlace={setPlace} isSearch={isSearch} setSearch={setSearch} /> }/>
+        <Route path="/hotels-list" element={ <HotelsList place={place} setPlace={setPlace} isSearch={isSearch} setSearch={setSearch} currency={currency} checkIn={checkIn} checkOut={checkOut} setCheckIn={setCheckIn} setCheckOut={setCheckOut} rooms={rooms} setRooms={setRooms} adults={adults} setAdults={setAdults} /> }/>
         <Route path="*" element={<div className="page-not-found"><h1><i id="page-not-found-icon" className="ri-pages-line"></i>Page not found</h1><button onClick={() => navigate("/")}>Go home</button></div>}></Route>
       </Routes>
       <RegistrationForm setShowRegistration={setShowRegistration} setShowSignIn={setShowSignIn} showRegistration={showRegistration} />

@@ -3,10 +3,10 @@ import getAccessToken from "./token";
 
 const token = await getAccessToken();
 
-export default async function getHotelInfo(id) {
+export default async function getHotelInfo(id, checkIn = "", checkOut = "", adults = "", rooms = "") {
     try {
         const response = await axios.get(
-            `https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=${id}`,
+            `https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=${id}&lang=EN${checkIn}${checkOut}${adults}${rooms}`,
             {
                 headers: { Authorization: `Bearer ${token}` },
             }
@@ -16,6 +16,10 @@ export default async function getHotelInfo(id) {
         return data
     } catch (error) {
         console.error("Ошибка при получении данных:", error.response?.data || error.message);
-        return [];
+        const errData = error.response?.data?.errors?.[0] || {};
+        throw {
+            status: errData.status,
+            detail: errData.detail
+        };
     }
 }

@@ -24,7 +24,7 @@ body {
     margin: 8.5px;
 }
   
-.user-location .spinner-icon {
+.spinner-icon {
     display: none;
 }
 
@@ -600,10 +600,6 @@ body {
   margin: 8px;
 }
 
-.popular-city-disc .spinner-icon {
-  display: none;
-}
-
 .discount-title {
   padding-right: 370px;
 }
@@ -905,7 +901,7 @@ footer {
   flex: 1
 }
 
-.registration-confirm, .signin-confirm {
+.registration-confirm, .signin-confirm, .hotel-reserve, .hotel-page-error button  {
   border: none;
   color: #fff;
   background-color: #007bff;
@@ -915,7 +911,7 @@ footer {
   margin-top: 32px;
 }
 
-.registration-confirm:hover, .signin-confirm:hover {
+.registration-confirm:hover, .signin-confirm:hover, .hotel-reserve:hover, .hotel-page-error button:hover {
   background-color: #015dc0;
 }
 
@@ -1176,7 +1172,7 @@ footer {
   font-weight: bold;
 }
 
-.nothing-found button, .page-not-found button {
+.nothing-found button, .page-not-found button, .hotels-name-nothing-found button {
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -1185,45 +1181,159 @@ footer {
   cursor: pointer;
 }
 
-.nothing-found button:hover, .page-not-found button:hover {
+.nothing-found button:hover, .page-not-found button:hover, .hotels-name-nothing-found button:hover {
   background-color: #015dc0;
 }
 
-.hotel-page-info {
+.hotel-page-info, .hotel-page-error {
   background: #fff;
-  padding: 20px;
   border-radius: 10px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  width: 60%;
+  width: auto;
   display: flex;
   gap: 10px;
 }
 
-.hotel-page-name {
-  color: #000;
+.hotel-page-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 20px;
 }
 
-.hotel-page-description {
-  color: #000
+.hotel-page-image {
+  position: relative;
+  height: 335px;
+  width: 335px;
+}
+
+.hotel-page-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px 0 0 10px;
+}
+
+.hotel-page-data {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: black;
+  font-size: 14px;
+}
+
+.hotel-page-name {
+  font-size: 24px;
+  margin: 0;
+  color: black;
+}
+
+#hotel-page-rating {
+  color: #007BFF;
+}
+
+.hotel-page-addinfo {
+  font-size: 14px;
+  color: black;
+}
+
+.hotel-page-addinfo-title {
+  font-weight: 600;
 }
 
 .hotel-page-price {
-  color: #000
+  font-size: 16px;
+  font-weight: bold;
 }
+
+.hotel-page-price span{
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.hotel-page-btns-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.hotel-add2wl {
+  border: none;
+  background-color: transparent;
+  font-size: 24px;
+  color: #007BFF;
+  cursor: pointer;
+}
+
 
 .hotel-reserve {
-  background-color: #007bff;
+  margin: 0;
+  width: 250px;
+}
+
+.hotel-room-categories {
+  font-size: 14px;
+  color: black;
+}
+
+#category-icon {
+  color: #007BFF
+}
+
+.hotel-page-error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 50px;
+}
+
+#hotel-page-error-icon {
+  font-size: 36px;
+  font-weight: 500;
+  align-self: center;
+  color: #007BFF;
+}
+
+.hotel-page-error h1 {
+  color: black;
+  font-size: 30px;
+  align-self: center;
+}
+
+.hotel-page-error span {
+  color: black;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.hotel-page-error button {
+  width: 125px;
+  align-self: center;
+}
+
+.hotels-name-nothing-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 25px 20px;
-  cursor: pointer;
-  margin-left: 800px;
+  padding: 20px;
+  gap: 5px;
 }
 
-.hotel-reserve:hover {
-  background-color: #015dc0;
+#hotels-name-nothing-found-icon {
+  font-size: 28px;
+  font-weight: bold;
 }
 
+.hotels-name-nothing-found h1 {
+  display: flex;
+  flex-direction: column;
+  font-size: 28px;
+  font-weight: bold;
+  gap: 10px;
+  align-items: center;
+}
 
+.hotels-name-nothing-found h1 span {
+  font-size: 18px;
+}
   

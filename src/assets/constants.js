@@ -127,7 +127,7 @@ export const firstPriceIds = {
     "Paris": "RTPARMAI",
     "Tokyo": "ICTYOICB",
     "London": "MCLONPLM",
-    "Rome": "BWROM073",
-    "Dubai": "HLDXB111"
+    "Rome": "HSROMAUY",
+    "Dubai": "SIDXB731"
 }
   

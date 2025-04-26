@@ -131,7 +131,7 @@ const HomePageItems = ({ currency, setPlace, setShowRegistration, setShowSignIn 
                       <img className="popular-city-image" src={getImage(city)} alt={city} />
                       <div className="popular-city-disc">
                           <p className="popular-city-title">{city}</p>
-                          {!isLoading && hotelsInfo[city] ? <div className="popular-city-hotels-info"><p className="popular-city-hotels-count">{!hotelsInfo[city].count ? "N/A" : hotelsInfo[city].count} <span>Hotels</span></p><p className="popular-city-hotels-price">{!currenciesSymbols[hotelsInfo[city].currency] ? "" : currenciesSymbols[hotelsInfo[city].currency]}{hotelsInfo[city]?.convertedPrice !== undefined  ? formattedNumber(hotelsInfo[city].convertedPrice)  : "N/A"} <span>Initial price</span></p></div>: <div className="spinner"><i className="ri-loader-4-line spinner-icon"></i></div>}
+                          {!isLoading && hotelsInfo[city] ? <div className="popular-city-hotels-info"><p className="popular-city-hotels-count">{!hotelsInfo[city].count ? "N/A" : hotelsInfo[city].count} <span>Hotels</span></p><p className="popular-city-hotels-price">{!currenciesSymbols[hotelsInfo[city].currency] ? "" : currenciesSymbols[hotelsInfo[city].currency]}{hotelsInfo[city]?.convertedPrice !== undefined  ? formattedNumber(hotelsInfo[city].convertedPrice)  : "N/A"} <span>Initial price</span></p></div> : <div className="spinner"><i className="ri-loader-4-line spinner-icon"></i></div>}
                       </div>
                   </div>
               ))}

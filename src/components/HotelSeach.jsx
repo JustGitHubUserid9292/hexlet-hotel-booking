@@ -5,7 +5,7 @@ import { popularCitiesRelLocation } from "../assets/constants";
 import getCityInfo from "../requests/getCityInfo";
 import { useNavigate } from 'react-router-dom'
 
-const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setCheckIn, checkOut, setCheckOut, adults, setAdults, childrens, setChilderns, rooms, setRooms, setSearch }) => {
+const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setCheckIn, checkOut, setCheckOut, adults, setAdults, children, setChildren, rooms, setRooms, setSearch }) => {
     const currentCountry = location.country
     const [showSuggestions, setShowSuggestions] = useState(false)
     const [showCalendar, setShowCalendar] = useState(false)
@@ -100,12 +100,12 @@ const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setChec
         return adults > 1 && setAdults((prev) => prev - 1)
     }
 
-    const handlePlusChildrens = () => {
-        return childrens < 9 && setChilderns((prev) => prev + 1)
+    const handlePlusChildren = () => {
+        return children < 9 && setChildren((prev) => prev + 1)
     }
 
-    const handleMinusChildrens = () => {
-        return childrens > 0 && setChilderns((prev) => prev - 1)
+    const handleMinusChildren = () => {
+        return children > 0 && setChildren((prev) => prev - 1)
     }
 
     const handlePlusRooms = () => {
@@ -119,14 +119,14 @@ const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setChec
     const handleSearch = (place) => {
         if (place) {
             setSearch(true)
-            navigate(`/hotels-list?place=${place}`)
+            return checkIn && checkOut ? navigate(`/hotels-list?place=${place}&adults=${adults}&roomQuantity=${rooms}&checkInDate=${checkIn}&checkOutDate=${checkOut}`) : navigate(`/hotels-list?place=${place}&adults=${adults}&roomQuantity=${rooms}`)
         }
-        return;
+        return; 
     }
 
     return (<>
         <div className="hotel-search">
-            <i id="input-icon" className="ri-home-4-line"></i><input type="text" value={place} onClick={toggleSearchSuggestions} className="search-input" placeholder="Where you want to go?" onChange={handleChange} />
+            <i id="input-icon" className="ri-search-line"></i><input type="text" value={place} onClick={toggleSearchSuggestions} className="search-input" placeholder="Where you want to go?" onChange={handleChange} />
             <div className={showSuggestions ? "search-suggestions show" : "search-suggestions"}>
                 <div className="search-suggestions-header">
                     <p className="search-suggestions-disc">{place ? `Results found for your query:` : "Popular cities in relation to your location:"}</p>
@@ -141,10 +141,10 @@ const HotelSearch = ({ handleChange, location, place, setPlace, checkIn, setChec
             <div className={showCalendar ? "calendar-popup show" : "calendar-popup"}>
                 <Calendar checkIn={checkIn} checkOut={checkOut} selectDates={selectDates}/>
             </div>
-            <button className={showBookingDetails ? "booking-details-btn focus" : "booking-details-btn"} onClick={toggleBookingDetails}><i className="ri-group-fill"></i> {adults} adult · {childrens} child · {rooms} room</button>
+            <button className={showBookingDetails ? "booking-details-btn focus" : "booking-details-btn"} onClick={toggleBookingDetails}><i className="ri-group-fill"></i> {adults} adult · {children} child · {rooms} room</button>
             <div className={showBookingDetails ? "booking-details show" : "booking-details"}>
                 <div className="booking-details-item">Adults <div className="details-btns-container"><button className="plus" onClick={handlePlusAdults} disabled={adults === 9}><i className="ri-add-line"></i></button><input type="number" className="details-input" value={adults} readOnly></input><button className="minus" onClick={handleMinusAdults} disabled={adults === 1}><i className="ri-subtract-line"></i></button></div></div>
-                <div className="booking-details-item">Childrens <div className="details-btns-container"><button className="plus" onClick={handlePlusChildrens} disabled={childrens === 9}><i className="ri-add-line"></i></button><input type="number" className="details-input" value={childrens} readOnly></input><button className="minus" onClick={handleMinusChildrens} disabled={childrens === 0}><i className="ri-subtract-line"></i></button></div></div>
+                <div className="booking-details-item">Children <div className="details-btns-container"><button className="plus" onClick={handlePlusChildren} disabled={children === 9}><i className="ri-add-line"></i></button><input type="number" className="details-input" value={children} readOnly></input><button className="minus" onClick={handleMinusChildren} disabled={children === 0}><i className="ri-subtract-line"></i></button></div></div>
                 <div className="booking-details-item">Rooms <div className="details-btns-container"><button className="plus" onClick={handlePlusRooms} disabled={rooms === 9}><i className="ri-add-line"></i></button><input type="number" className="details-input" value={rooms} readOnly></input><button className="minus" onClick={handleMinusRooms} disabled={rooms === 1}><i className="ri-subtract-line"></i></button></div></div>
                 <button className="ready" onClick={toggleBookingDetails}>Ready</button>
             </div>
