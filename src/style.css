@@ -479,7 +479,7 @@ body {
   align-items: center;
 }
 
-.home-title, .discount-title, .travel-blog-title {
+.home-title, .discount-title, .travel-blog-title, .profile-page-title {
   display: flex;
   flex-direction: column;
   color: white;
@@ -491,7 +491,7 @@ body {
   font-size: 18px;
 }
 
-.popular-searches, .new-user-discount, .site-disc, .travel-blog, .hotels-items {
+.popular-searches, .new-user-discount, .site-disc, .travel-blog, .hotels-items, .profile-page-data {
   background-color: #0E1218;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -590,7 +590,7 @@ body {
   font-weight: normal;
 }
 
-.popular-city-disc .spinner {
+.popular-city-disc .spinner, .registration-confirm .spinner, .signin-confirm .spinner {
   width: 8px;
   height: 8px;
   border: 4px solid rgba(255, 255, 255, 0.2); 
@@ -629,14 +629,20 @@ body {
   font-size: 14px;
 }
 
-.new-user-discount-btns {
+.new-user-discount-btns, .new-user-discount-loginin-status {
   display: flex;
   padding-left: 25px;
   gap: 10px;
   margin-bottom: 16px;
 }
 
-.new-user-discount-sign-in, .new-user-discount-register {
+.new-user-discount-loginin-status p {
+  margin: 0;
+  font-size: 12px;
+  align-self: center;
+}
+
+.new-user-discount-sign-in, .new-user-discount-register, .go-to-booking, .profile-quit, .profile-edit {
   border: none;
   color: #fff;
   background-color: #007bff;
@@ -645,17 +651,17 @@ body {
   cursor: pointer;
 }
 
-.new-user-discount-register {
+.new-user-discount-register, .profile-quit {
   border: 1px, solid, #007bff;
   background-color: #fff;
   color: #007bff;
 }
 
-.new-user-discount-sign-in:hover {
+.new-user-discount-sign-in:hover, .go-to-booking:hover, .profile-edit:hover  {
   background-color: #015dc0;
 }
 
-.new-user-discount-register:hover {
+.new-user-discount-register:hover, .profile-quit:hover {
   background-color: #a0c4ff;
 }
 
@@ -901,7 +907,7 @@ footer {
   flex: 1
 }
 
-.registration-confirm, .signin-confirm, .hotel-reserve, .hotel-page-error button  {
+.registration-confirm, .signin-confirm, .hotel-reserve, .hotel-page-error button {
   border: none;
   color: #fff;
   background-color: #007bff;
@@ -909,6 +915,26 @@ footer {
   padding: 10px;
   cursor: pointer;
   margin-top: 32px;
+}
+
+.registration-confirm.success, .signin-confirm.success {
+  background-color: #28a745;
+}
+
+.registration-confirm.success:hover, .signin-confirm.success:hover {
+  background-color: #28a745;
+  cursor: default;
+}
+
+.registration-confirm .spinner, .signin-confirm .spinner {
+  border-top: 4px solid white; 
+  margin: 0;
+  margin-left: 50%;
+}
+
+.go-to-booking {
+  margin: 0;
+  padding: 10px 5px;
 }
 
 .registration-confirm:hover, .signin-confirm:hover, .hotel-reserve:hover, .hotel-page-error button:hover {
@@ -1144,7 +1170,7 @@ footer {
   pointer-events: none;
 }
 
-.nothing-found, .page-not-found {
+.nothing-found, .page-not-found, .profile-page-unlog {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1154,7 +1180,7 @@ footer {
   height: 59vh;
 }
 
-.nothing-found h1, .page-not-found h1 {
+.nothing-found h1, .page-not-found h1, .profile-page-unlog h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1163,16 +1189,16 @@ footer {
   font-weight: bold;
 }
 
-.nothing-found span {
+.nothing-found span, .profile-page-unlog span {
   font-size: 18px;
 }
 
-.nothing-found #nothing-found-icon, .page-not-found #page-not-found-icon {
+.nothing-found #nothing-found-icon, .page-not-found #page-not-found-icon, #profile-page-unlog-icon {
   font-size: 28px;
   font-weight: bold;
 }
 
-.nothing-found button, .page-not-found button, .hotels-name-nothing-found button {
+.nothing-found button, .page-not-found button, .hotels-name-nothing-found button, .profile-page-unlog button {
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -1181,7 +1207,7 @@ footer {
   cursor: pointer;
 }
 
-.nothing-found button:hover, .page-not-found button:hover, .hotels-name-nothing-found button:hover {
+.nothing-found button:hover, .page-not-found button:hover, .hotels-name-nothing-found button:hover, .profile-page-unlog button:hover {
   background-color: #015dc0;
 }
 
@@ -1336,4 +1362,121 @@ footer {
 .hotels-name-nothing-found h1 span {
   font-size: 18px;
 }
-  
+
+.profile-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 59vh;
+}
+
+.profile-page-title {
+  padding-right: 530px;
+  margin-top: 0;
+}
+
+.profile-page-data {
+  display: flex;
+  gap: 15px;
+}
+
+.profile-page-avatar-wrapper {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  margin-top: 15px;
+}
+
+.profile-page-avatar {
+  width: 100%;
+  height: 100%;
+}
+
+.profile-user-bio {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 250px;
+  flex-direction: column;
+}
+
+.profile-username {
+  font-size: 24px;
+  margin: 0;
+}
+
+.profile-membership-date {
+  font-size: 14px;
+  font-weight: 600;
+  color: #007BFF;
+} 
+
+.profile-page-userInfo {
+  border-radius: 15px;
+  width: 60%;
+  margin-bottom: 15px;
+}
+
+.profile-page-userInfo-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 10px;
+}
+
+.profile-page-field {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.profile-page-label {
+  font-weight: 600;
+  color: #666;
+  width: 120px;
+}
+
+.profile-page-value {
+  color: #fff;
+  word-break: break-word;
+}
+
+.profile-page-btns-wrapper {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+  margin-bottom: 18px;
+}
+
+.profile-edit, .profile-quit {
+  padding: 10px 20px;
+}
+
+.profile-page-edit-input {
+  width: 50%;
+  font-size: 12px;
+  padding: 5px 5px;
+  border: 2px solid #ddd; 
+  border-radius: 8px;
+  background-color: #0e0e0e;
+  color: #fff;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.profile-page-edit-input:focus {
+  outline: none;
+  border-color: #007BFF;
+  box-shadow: 0 0 5px rgba(0, 191, 255, 0.5);
+}
+
+.profile-page-edit-input::placeholder {
+  font-size: 12px;
+}

@@ -7,7 +7,9 @@ import ScrollToTopButton from './components/ScrolltoTopBtn'
 import RegistrationForm from "./components/RegistrationForm";
 import SignInForm from "./components/SignInForm";
 import HotelsList from './components/HotelsList'
+import ProfilePage from './components/ProfilePage'
 import { Routes, Route, useNavigate } from 'react-router-dom'
+import { auth } from './requests/firebase_db'
 
 const getLogo = (logoName) => {
   return new URL(`./assets/${logoName}.png`, import.meta.url).href;
@@ -25,6 +27,8 @@ function App() {
   const [showRegistration, setShowRegistration] = useState(false)
   const [showSignIn, setShowSignIn] = useState(false)
   const [isSearch, setSearch] = useState(false)
+
+  const user = auth.currentUser
 
   const navigate = useNavigate()
 
@@ -77,7 +81,7 @@ function App() {
         />
         <div className='site-config'>
           <CurrencySwitcher currency={currency} setCurrency={setCurrency} />
-          <button className='profile' onClick={() => setShowRegistration(true)}><i className="ri-user-3-line"></i></button>
+          <button className='profile' onClick={() => {user ? navigate("/profile") : setShowRegistration(true)}}><i className="ri-user-3-line"></i></button>
           <button className='theme-switcher'><i className="ri-moon-line"></i></button>
         </div>
       </div>
@@ -94,15 +98,17 @@ function App() {
                 setPlace={setPlace}
                 setShowRegistration={setShowRegistration}
                 setShowSignIn={setShowSignIn}
+                user={user}
               />
             </div>
           }
         />
         <Route path="/hotels-list" element={ <HotelsList place={place} setPlace={setPlace} isSearch={isSearch} setSearch={setSearch} currency={currency} checkIn={checkIn} checkOut={checkOut} setCheckIn={setCheckIn} setCheckOut={setCheckOut} rooms={rooms} setRooms={setRooms} adults={adults} setAdults={setAdults} /> }/>
+        <Route path="/profile" element={ user ? <ProfilePage user={user} /> : <div className="profile-page-unlog"><h1><i id="profile-page-unlog-icon" className="ri-user-3-line"></i>You are not logged in <span>Create account or log in to see your profile.</span></h1><button onClick={() => setShowRegistration(true)}>Create account or sign in</button></div>} />
         <Route path="*" element={<div className="page-not-found"><h1><i id="page-not-found-icon" className="ri-pages-line"></i>Page not found</h1><button onClick={() => navigate("/")}>Go home</button></div>}></Route>
       </Routes>
-      <RegistrationForm setShowRegistration={setShowRegistration} setShowSignIn={setShowSignIn} showRegistration={showRegistration} />
-      <SignInForm showSignin={showSignIn} setShowSignIn={setShowSignIn} />
+      {!user && <RegistrationForm setShowRegistration={setShowRegistration} setShowSignIn={setShowSignIn} showRegistration={showRegistration} /> }
+      {!user && <SignInForm showSignin={showSignIn} setShowSignIn={setShowSignIn} />}
       <ScrollToTopButton />
       <footer>
         <div className='footer-header'>

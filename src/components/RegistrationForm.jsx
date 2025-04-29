@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as Yup from "yup";
+import { auth } from "../requests/firebase_db";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 const schema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -20,6 +22,8 @@ const RegistrationForm = ({ setShowRegistration, setShowSignIn, showRegistration
         confirm: "",
     });
     const [errors, setErrors] = useState({})
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false)
 
     useEffect(() => {
         if (!showRegistration) {
@@ -58,6 +62,36 @@ const RegistrationForm = ({ setShowRegistration, setShowSignIn, showRegistration
     const handleSubmit = async (e) => {
         e.preventDefault()
         await validate()
+
+        setIsSubmitting(true);
+        setIsSuccess(false);
+
+        if (Object.keys(errors).length === 0) {
+            try {
+              const userCredential = await createUserWithEmailAndPassword(
+                auth,
+                formData.email,
+                formData.confirm
+              );
+      
+              await updateProfile(userCredential.user, {
+                displayName: `${formData.name} ${formData.surname}`
+              });
+      
+              setIsSuccess(true);
+              setTimeout(() => { setIsSuccess(false); setShowRegistration(false) }, 2000);
+      
+            } catch (error) {
+              console.error("Error creating user:", error.message);
+              if (error.code === "auth/email-already-in-use") {
+                setErrors(prevErrors => ({
+                    ...prevErrors,
+                    email: "Email already in use"
+                }))
+              }
+            }
+        }
+        setIsSubmitting(false);
     }
 
     const handleShowPassword = (e) => {
@@ -100,7 +134,7 @@ const RegistrationForm = ({ setShowRegistration, setShowSignIn, showRegistration
                     {errors.confirm && <p className="form-error-text">{errors.confirm}</p>}
                 </div>
                 <span className="reg-check">Already have an account? <a onClick={() => { setShowRegistration(false); setShowSignIn(true) }}>Sign in.</a></span>
-                <button className="registration-confirm" type="submit">Register</button>
+                <button className={`registration-confirm ${isSuccess ? "success" : ""}`} type="submit">{isSubmitting ? <div className="spinner"><i className="ri-loader-4-line spinner-icon"></i></div> : isSuccess ? <span>Success <i className="ri-check-line"></i></span> : "Register"}</button>
             </form>
         </div>
     </>)

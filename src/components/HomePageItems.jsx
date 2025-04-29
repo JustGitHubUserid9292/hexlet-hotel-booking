@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { popularCities, firstPriceIds, currenciesSymbols } from "../assets/constants";
 import getCityInfo from "../requests/getCityInfo";
 import getHotels from "../requests/getHotels";
@@ -47,13 +48,14 @@ const saveToLocalStorage = (key, data) => {
     localStorage.setItem(key, JSON.stringify(data));
 };
 
-const HomePageItems = ({ currency, setPlace, setShowRegistration, setShowSignIn }) => {
+const HomePageItems = ({ currency, setPlace, setShowRegistration, setShowSignIn, user }) => {
     const [startIndex, setStartIndex] = useState(0);
     const [isNext, setNext] = useState(false)
     const [hotelsInfo, setHotelsInfo] = useState(loadFromLocalStorage("hotelsInfo") || {});
     const [isLoading, setLoading] = useState(false)
     const itemsPerPage = 4;
 
+    const navigate = useNavigate()
     
     useEffect(() => {
         const fetchHotelsData = async () => {
@@ -121,6 +123,12 @@ const HomePageItems = ({ currency, setPlace, setShowRegistration, setShowSignIn 
         window.open(url, "_blank", "noopener,noreferrer");
     };
 
+    const inputFocus = () => {
+        const input = document.querySelector(".search-input");
+        input?.focus();
+        input?.click();
+    }
+
     return (<>
         <div className="popular-searches">
           <h1 className="popular-title">Popular Searches</h1>
@@ -141,8 +149,8 @@ const HomePageItems = ({ currency, setPlace, setShowRegistration, setShowSignIn 
         <h1 className="discount-title">Discounts for new users</h1>
         <div className="new-user-discount">
             <img className="discount-logo" src={getLogo("discount")} alt="discount-logo" />
-            <p className="new-user-discount-disc">Sign in to your account and save money<span>Save from 10% on your first hotel booking.</span></p>
-            <div className="new-user-discount-btns"><button className="new-user-discount-sign-in" onClick={() => setShowSignIn(true)}>Sign in</button><button className="new-user-discount-register" onClick={() => setShowRegistration(true)}>Register</button></div>
+            <p className="new-user-discount-disc">{user ? `Hello, ${user.displayName}` : "Sign in to your account and save money"}<span>{user ? "Don't miss your 10% discount - the offer ends soon!" : "Save from 10% on your first hotel booking."}</span></p>
+            {user ? <div className="new-user-discount-loginin-status"><button className="go-to-booking" onClick={inputFocus}>Booking!</button></div> : <div className="new-user-discount-btns"><button className="new-user-discount-sign-in" onClick={() => setShowSignIn(true)}>Sign in</button><button className="new-user-discount-register" onClick={() => setShowRegistration(true)}>Register</button></div>}
         </div>
         <h1 className="travel-blog-title">A travel blog for inspiration on your next trip</h1>
         <div className="travel-blog">
