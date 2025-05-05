@@ -1,9 +1,8 @@
 import axios from "axios";
 import getAccessToken from "./token";
 
-const token = await getAccessToken();
-
 export default async function getHotelInfo(id, checkIn = "", checkOut = "", adults = "", rooms = "") {
+    const token = await getAccessToken();
     try {
         const response = await axios.get(
             `https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=${id}&lang=EN${checkIn}${checkOut}${adults}${rooms}`,
