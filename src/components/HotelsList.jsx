@@ -141,7 +141,7 @@ const HotelsList = ({ place, setPlace, isSearch, setSearch, currency, checkIn, c
                         );
                     })}
                     {hotelsToDisplay.length === 0 && <div className="hotels-name-nothing-found"><i id="hotels-name-nothing-found-icon" className="ri-home-4-line"></i><h1>{hotelName}: nothing found<span>There is no hotel by that name, try changing your search criteria.</span></h1><button onClick={hotelsNameInputFocus}>Change search criteria</button></div>}
-                    <HotelPage isHotelPageShow={isHotelPageShow} setShowHotelPage={setShowHotelPage} hotelData={hotelData} currency={currency} checkIn={checkIn} checkOut={checkOut} rooms={rooms} adults={adults} />
+                    <HotelPage isHotelPageShow={isHotelPageShow} setShowHotelPage={setShowHotelPage} hotelData={hotelData} currency={currency} place={place} checkIn={checkIn} checkOut={checkOut} rooms={rooms} adults={adults} />
                     <div className="pagination">
                         {Array.from({ length: totalPages }, (_, i) => (
                         <button key={i} onClick={() => setStartIndex(i * itemsPerPage)} className={`page-btn ${startIndex / itemsPerPage === i ? 'active' : ''}`}>{i + 1}</button>))}

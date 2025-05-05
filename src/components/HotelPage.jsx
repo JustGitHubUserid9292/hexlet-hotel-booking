@@ -4,7 +4,7 @@ import { currenciesSymbols } from "../assets/constants";
 import getHotelInfo from "../requests/getHotelInfo";
 import { useNavigate } from 'react-router-dom';
 
-const HotelPage = ({ isHotelPageShow, setShowHotelPage, hotelData, currency, checkIn, checkOut, rooms, adults }) => {
+const HotelPage = ({ isHotelPageShow, setShowHotelPage, hotelData, currency, place, checkIn, checkOut, rooms, adults }) => {
     const [currentInfo, setCurrentInfo] = useState([])
     const [isLoading, setLoading] = useState(false)
     const [isEmpty, setEmpty] = useState(false)
@@ -35,6 +35,8 @@ const HotelPage = ({ isHotelPageShow, setShowHotelPage, hotelData, currency, che
     };
 
     const navigate = useNavigate()
+
+    const searchPath = checkIn && checkOut ? `&place=${place}&adults=${adults}&roomQuantity=${rooms}&checkInDate=${checkIn}&checkOutDate=${checkOut}` : `&place=${place}&adults=${adults}&roomQuantity=${rooms}`
 
     useEffect(() => {
         const fetchHotelInfo = async () => {
@@ -74,23 +76,26 @@ const HotelPage = ({ isHotelPageShow, setShowHotelPage, hotelData, currency, che
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [isHotelPageShow]);
 
+
     return (<>
         <div className={isHotelPageShow ? "modal-overlay show" : "modal-overlay"}>
         {isLoading ? <div className="spinner"><i className="ri-loader-4-line spinner-icon"></i></div> : !isEmpty ? currentInfo.map((elem) => {
-        return <div key={elem.hotel.hotelId} className="hotel-page-info">
+        const hotelId = elem.hotel.hotelId
+
+        return <div key={hotelId} className="hotel-page-info">
                     <div className="hotel-page-image">
                         <img src={getImage("Image-not-found")} alt="hotel-page-image"/>
                     </div>
                     <div className="hotel-page-text-wrapper">
                         <div className="hotel-page-data">
                             <h1 className="hotel-page-name">{normalize(elem.hotel.name)}</h1>
-                            <span><i id="hotel-page-rating" className="ri-star-fill"></i> N/A · ID: {elem.hotel.hotelId}</span>
+                            <span><i id="hotel-page-rating" className="ri-star-fill"></i> N/A · ID: {hotelId}</span>
                         </div>  
                         {elem.offers.map((elem) => {
-                            return <div key={elem.id} className="hotel-page-addinfo"><p className="hotel-page-addinfo-title">Description of the available room:</p><p className="hotel-page-description">{elem.room.description.text}</p><p className="hotel-page-price">{`${currenciesSymbols[currency]}${formattedNumber(price)}`} <span>Total price based on the options you choose.</span></p></div>
+                            return <div key={elem.id} className="hotel-page-addinfo"><p className="hotel-page-addinfo-title">Description of the available room:</p><p className="hotel-page-description">{elem.room.description.text}</p><p className="hotel-page-price">{`${currenciesSymbols[currency]}${formattedNumber(price)}`} <span>Total price based on the options you choose.</span></p><a className="hotel-page-go-to-overview" onClick={() => { navigate(`/hotel-overview?hotelId=${hotelId}${searchPath}`)}}>View complete room overview</a></div>
                         })}
                         <div className="hotel-page-btns-wrapper">
-                            <button className="hotel-reserve" onClick={() => { navigate(`/hotel-reserve?offerId=${elem.hotel.hotelId}`); setShowHotelPage(false)}}>Reserve</button>
+                            <button className="hotel-reserve" onClick={() => { navigate(`/hotel-reserve?hotelId=${hotelId}`); setShowHotelPage(false)}}>Reserve</button>
                             <button className="hotel-add2wl" onMouseEnter={() => setActive(true)} onMouseLeave={() => setActive(false)}>{active ? <i className="ri-heart-fill"></i> : <i className="ri-heart-line"></i>}</button>
                         </div>
                         {elem.offers.map((elem) => {

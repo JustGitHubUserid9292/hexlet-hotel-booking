@@ -7,6 +7,7 @@ import ScrollToTopButton from './components/ScrolltoTopBtn'
 import RegistrationForm from "./components/RegistrationForm";
 import SignInForm from "./components/SignInForm";
 import HotelsList from './components/HotelsList'
+import HotelOverview from './components/HotelOverview'
 import ProfilePage from './components/ProfilePage'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import { auth } from './requests/firebase_db'
@@ -82,7 +83,7 @@ function App() {
         <div className='site-config'>
           <CurrencySwitcher currency={currency} setCurrency={setCurrency} />
           <button className='profile' onClick={() => {user ? navigate("/profile") : setShowRegistration(true)}}><i className="ri-user-3-line"></i></button>
-          <button className='theme-switcher'><i className="ri-moon-line"></i></button>
+          <button className='about-us-btn' onClick={() => navigate("/about-us")}><i className="ri-information-line"></i></button> 
         </div>
       </div>
       <Routes>
@@ -104,6 +105,7 @@ function App() {
           }
         />
         <Route path="/hotels-list" element={ <HotelsList place={place} setPlace={setPlace} isSearch={isSearch} setSearch={setSearch} currency={currency} checkIn={checkIn} checkOut={checkOut} setCheckIn={setCheckIn} setCheckOut={setCheckOut} rooms={rooms} setRooms={setRooms} adults={adults} setAdults={setAdults} /> }/>
+        <Route path="/hotel-overview" element={ <HotelOverview place={place} setPlace={setPlace} currency={currency} checkIn={checkIn} checkOut={checkOut} setCheckIn={setCheckIn} setCheckOut={setCheckOut} rooms={rooms} setRooms={setRooms} adults={adults} setAdults={setAdults} /> } ></Route>
         <Route path="/profile" element={ user ? <ProfilePage user={user} /> : <div className="profile-page-unlog"><h1><i id="profile-page-unlog-icon" className="ri-user-3-line"></i>You are not logged in <span>Create account or log in to see your profile.</span></h1><button onClick={() => setShowRegistration(true)}>Create account or sign in</button></div>} />
         <Route path="*" element={<div className="page-not-found"><h1><i id="page-not-found-icon" className="ri-pages-line"></i>Page not found</h1><button onClick={() => navigate("/")}>Go home</button></div>}></Route>
       </Routes>
