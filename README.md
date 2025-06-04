@@ -19,6 +19,8 @@
 - **ExchangeRate API** – Real-time currency conversion
 - **Firebase** – Authentication and backend services
 - **CSS** – Responsive styling
+- **TestRail** – centralized test management system
+- **ChromeDevTools** – analysis of interface and network requests
 
 ## ⚠️ Disclaimer
 
