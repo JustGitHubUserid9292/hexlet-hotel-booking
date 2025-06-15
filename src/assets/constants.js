@@ -123,7 +123,7 @@ export const popularCities = [
 ];
 
 export const firstPriceIds = {
-    "New York": "MCNYCEXM",
+    "New York": "XVNYCSMS",
     "Paris": "RTPARMAI",
     "Tokyo": "ICTYOICB",
     "London": "MCLONPLM",
