@@ -126,7 +126,7 @@ export const firstPriceIds = {
     "New York": "XVNYCSMS",
     "Paris": "RTPARMAI",
     "Tokyo": "ICTYOICB",
-    "London": "MCLONPLM",
+    "London": "HILOND39",
     "Rome": "HSROMAUY",
     "Dubai": "SIDXB731"
 }
